@@ -7,6 +7,11 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+// WIP: There has to be at least one loader in the app, so here's one.
+export function loader() {
+  return null;
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
