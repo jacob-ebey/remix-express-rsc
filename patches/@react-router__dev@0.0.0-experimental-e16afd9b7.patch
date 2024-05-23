@@ -1,0 +1,65 @@
+diff --git a/dist/config/defaults/entry.client.rsc.tsx b/dist/config/defaults/entry.client.rsc.tsx
+index 2811a669b60da2e903f7cac8d6053b848090e367..45fabaf3bb1232fb4ba40d426963cc2ce7b26698 100644
+--- a/dist/config/defaults/entry.client.rsc.tsx
++++ b/dist/config/defaults/entry.client.rsc.tsx
+@@ -71,6 +71,25 @@ if (import.meta.env.PROD) {
+   };
+ }
+ 
++window.__diy_client_manifest__.callServer = async (id, args) => {
++  const href = window.location.href;
++	const headers = new Headers({
++		Accept: "text/x-component",
++		"rsc-action": id,
++	});
++	const responsePromise = fetch(href, {
++		method: "POST",
++		headers,
++		body: await ReactServerDOM.encodeReply(args),
++	});
++
++	const result = await ReactServerDOM.createFromFetch(responsePromise, window.__diy_client_manifest__);
++  
++  window.__remixRouter.revalidate();
++
++  return result;
++}
++
+ window.createFromReadableStream = function createFromReadableStream(
+   body: ReadableStream<Uint8Array>
+ ) {
+@@ -88,3 +107,10 @@ startTransition(() => {
+     </StrictMode>
+   );
+ });
++
++if (import.meta.hot) {
++  console.log("ACCEPTING HMR");
++  import.meta.hot.on("react-router:hmr", () => {
++    window.__remixRouter.revalidate();
++  });
++}
+diff --git a/dist/config/defaults/entry.react-server.node.tsx b/dist/config/defaults/entry.react-server.node.tsx
+index 828c86676bad3d2b3b54520bf4acd0f231012d39..d9c995ae89f587265b32f3129061e6f66179bca0 100644
+--- a/dist/config/defaults/entry.react-server.node.tsx
++++ b/dist/config/defaults/entry.react-server.node.tsx
+@@ -13,3 +13,7 @@ export function renderToReadableStream(data: unknown) {
+   pipe(passthrough);
+   return createReadableStreamFromReadable(passthrough);
+ }
++
++export const decodeAction = ReactServerDOM.decodeAction;
++export const decodeFormState = ReactServerDOM.decodeFormState;
++export const decodeReply = ReactServerDOM.decodeReply;
+diff --git a/dist/config/defaults/entry.react-server.web.tsx b/dist/config/defaults/entry.react-server.web.tsx
+index 06a8b418e676d2d4f16b5c8ced102700bbf8a96b..d58f6bc647580ef6fcea26fe5cce071c7edacbc3 100644
+--- a/dist/config/defaults/entry.react-server.web.tsx
++++ b/dist/config/defaults/entry.react-server.web.tsx
+@@ -7,3 +7,7 @@ export function renderToReadableStream(data: unknown) {
+     global.__diy_server_manifest__
+   );
+ }
++
++export const decodeAction = ReactServerDOM.decodeAction;
++export const decodeFormState = ReactServerDOM.decodeFormState;
++export const decodeReply = ReactServerDOM.decodeReply;

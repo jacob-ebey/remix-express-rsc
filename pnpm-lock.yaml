@@ -10,6 +10,9 @@ overrides:
   vite: 6.0.0-alpha.15
 
 patchedDependencies:
+  '@react-router/dev@0.0.0-experimental-e16afd9b7':
+    hash: xzj6pzcmh7ey6e6dvilmtsrtce
+    path: patches/@react-router__dev@0.0.0-experimental-e16afd9b7.patch
   react@0.0.0-experimental-96c584661-20240412:
     hash: jq26usongtd4z44j5b3sx5q44m
     path: patches/react@0.0.0-experimental-96c584661-20240412.patch
@@ -87,7 +90,7 @@ importers:
         version: 7.24.5
       '@react-router/dev':
         specifier: 0.0.0-experimental-e16afd9b7
-        version: 0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))
+        version: 0.0.0-experimental-e16afd9b7(patch_hash=xzj6pzcmh7ey6e6dvilmtsrtce)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))
       '@types/babel__core':
         specifier: 7.20.5
         version: 7.20.5
@@ -2895,7 +2898,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.2.20
 
-  '@react-router/dev@0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))':
+  '@react-router/dev@0.0.0-experimental-e16afd9b7(patch_hash=xzj6pzcmh7ey6e6dvilmtsrtce)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))':
     dependencies:
       '@babel/core': 7.24.5
       '@babel/generator': 7.24.5
