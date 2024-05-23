@@ -11,8 +11,11 @@
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": [
       "@react-router/node",
+      "node",
       "react/canary",
       "react-dom/canary",
+      "react/experimental",
+      "react-dom/experimental",
       "vite/client"
     ],
     "isolatedModules": true,
@@ -28,7 +31,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "@/*": ["./app/*"]
     },
     "noEmit": true
   }

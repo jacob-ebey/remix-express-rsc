@@ -7,6 +7,9 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import { DelegateAnchors } from "./components/event-delegation";
+import "./root.css";
+
 // WIP: There has to be at least one loader in the app, so here's one.
 export function loader() {
   return null;
@@ -22,16 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
-        </nav>
+        <DelegateAnchors />
         {children}
         <ScrollRestoration />
         <Scripts />

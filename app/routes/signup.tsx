@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@react-router/node";
-import { Link, useLoaderData } from "react-router";
+import { useLoaderData } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -32,9 +32,9 @@ export function loader() {
     >
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Signup</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account.
+            Enter your email and password below to create an account.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -56,7 +56,18 @@ export function loader() {
               name="password"
               type="password"
               placeholder="********"
-              autoComplete="current-password"
+              autoComplete="new-password"
+              required
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="password">Verify Password</Label>
+            <Input
+              id="verifyPassword"
+              name="verifyPassword"
+              type="password"
+              placeholder="********"
+              autoComplete="new-password"
               required
             />
           </div>
@@ -64,12 +75,12 @@ export function loader() {
         <CardFooter>
           <div className="w-full gap-2">
             <Button type="submit" className="w-full block">
-              Sign in
+              Sign up
             </Button>
             <p>
-              Don't have an account?{" "}
-              <a href="/signup" className="underline">
-                Sign up
+              Already have an account?{" "}
+              <a href="/" className="underline">
+                Login
               </a>
             </p>
           </div>
@@ -79,6 +90,6 @@ export function loader() {
   );
 }
 
-export default function Index() {
+export default function Signup() {
   return useLoaderData() as ReturnType<typeof loader>;
 }

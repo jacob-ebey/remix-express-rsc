@@ -704,6 +704,12 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
       name: "rsc-directives",
       transform(code, id) {
         const [filepath] = id.split("?");
+        const ext = path.extname(filepath);
+
+        if (![".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs"].includes(ext)) {
+          return;
+        }
+
         const hash = this.environment?.mode === "dev" ? devHash : prodHash;
 
         if (this.environment?.name === "server") {
