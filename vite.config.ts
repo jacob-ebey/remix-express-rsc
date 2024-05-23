@@ -748,11 +748,7 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
             if (
               !ids.some((id) => reactRouterViteContext.clientModules.has(id))
             ) {
-              ctx.server.environments.client.hot.send({
-                type: "custom",
-                event: "react-router:hmr",
-                data: { route: null },
-              });
+              ctx.server.environments.client.hot.send("react-router:hmr", {});
             }
             return [];
           }
