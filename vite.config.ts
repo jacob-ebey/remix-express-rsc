@@ -287,7 +287,14 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
 
   async function createVirtualManifest(mode?: "build" | "dev" | "scan") {
     if (mode === "dev") {
-      return getReactRouterManifestForDev();
+      const manifest = await getReactRouterManifestForDev();
+      return js`
+        const manifest = ${JSON.stringify(manifest, null, 2)};
+        if (typeof window !== "undefined") {
+          window.__remixManifest = manifest;
+        }
+        export default manifest;
+      `;
     }
     const { reactRouterServerManifest } =
       await generateReactRouterManifestsForBuild();
@@ -309,7 +316,7 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
 
   // In dev, the server and browser manifests are the same
   async function getReactRouterManifestForDev() {
-    const routes: Record<string, unknown> = {};
+    const routes: Record<string, any> = {};
 
     if (!reactRouterViteContext.routes) throw new Error("No routes found");
     const routeManifestExports = await getRouteManifestModuleExports();
@@ -343,7 +350,7 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
       };
     }
 
-    const result = {
+    return {
       version: String(Math.random()),
       url: path.posix.join(
         reactRouterViteContext.basename,
@@ -365,14 +372,6 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
       routes,
       future: { unstable_serverComponents: true },
     };
-
-    return js`
-      const manifest = ${JSON.stringify(result, null, 2)};
-      if (typeof window !== "undefined") {
-        window.__remixManifest = manifest;
-      }
-      export default manifest;
-    `;
   }
 
   async function generateReactRouterManifestsForBuild(): Promise<{
@@ -730,9 +729,9 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
     },
     {
       name: "react-router-dev-server",
-      hotUpdate(ctx) {
+      async hotUpdate({ environment, server, file, modules, read }) {
         try {
-          const ids = ctx.modules
+          const ids = modules
             .map((mod) => mod.id)
             .filter((id): id is string => !!id);
 
@@ -744,17 +743,64 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
             ids
           );
 
-          if (ctx.environment.name === "server") {
+          if (environment.name === "server") {
             if (
               !ids.some((id) => reactRouterViteContext.clientModules.has(id))
             ) {
-              ctx.server.environments.client.hot.send("react-router:hmr", {});
+              server.environments.client.hot.send("react-router:hmr", {});
             }
             return [];
           }
 
-          if (ctx.environment.name === "ssr") {
+          if (environment.name === "ssr") {
             return [];
+          }
+
+          if (environment.name === "client") {
+            let route = getRoute(
+              reactRouterViteContext.appDirectory,
+              reactRouterViteContext.routes,
+              file
+            );
+
+            type ManifestRoute = RouteManifest[string];
+            type HmrEventData = { route: ManifestRoute | null };
+            let hmrEventData: HmrEventData = { route: null };
+
+            if (route) {
+              // invalidate manifest on route exports change
+              let serverManifest = (
+                await server.ssrLoadModule(virtualManifest.id)
+              ).default as ReactRouterManifest;
+
+              let oldRouteMetadata = serverManifest.routes[route.id];
+              let newRouteMetadata = (await getReactRouterManifestForDev())
+                .routes[route.id];
+
+              hmrEventData.route = newRouteMetadata;
+
+              if (
+                !oldRouteMetadata ||
+                (
+                  [
+                    "hasLoader",
+                    "hasClientLoader",
+                    "hasAction",
+                    "hasClientAction",
+                    "hasErrorBoundary",
+                  ] as const
+                ).some((key) => oldRouteMetadata[key] !== newRouteMetadata[key])
+              ) {
+                reactRouterViteContext.serverRunner?.moduleCache.invalidateDepTree(
+                  virtualModules.map((m) => m.id)
+                );
+              }
+            }
+
+            server.environments[environment.name].hot.send(
+              "react-router:hmr",
+              hmrEventData
+            );
           }
         } finally {
           reactRouterViteContext.clientModulePromiseCache?.clear();
@@ -976,6 +1022,18 @@ async function findEntry(
 async function writeFileSafe(file: string, contents: string) {
   await fsp.mkdir(path.dirname(file), { recursive: true });
   await fsp.writeFile(file, contents);
+}
+
+function getRoute(
+  appDirectory: string,
+  routes: RouteManifest,
+  file: string
+): ConfigRoute | undefined {
+  let routePath = normalizePath(path.relative(appDirectory, file));
+  let route = Object.values(routes).find(
+    (r) => normalizePath(r.file) === routePath
+  );
+  return route;
 }
 
 const getHash = (source: BinaryLike, maxLength?: number): string => {
