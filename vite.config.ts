@@ -40,7 +40,9 @@ declare global {
     clientModulePromiseCache?: Map<string, CachedPromise<unknown>>;
     clientModules: Set<string>;
     entryBrowserFilePath: string;
+    defaultEntryPrerenderFilePath: string;
     entryPrerenderFilePath: string;
+    defaultEntryServerFilePath: string;
     entryServerFilePath: string;
     fullRouteIds: Set<string>;
     prerenderRunner?: ReturnType<typeof createServerModuleRunner>;
@@ -61,13 +63,19 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
     appDirectory: path.resolve("app"),
     basename: "/",
     entryBrowserFilePath: await fsp.realpath(
+      path.resolve("app/entry.browser.tsx")
+    ),
+    defaultEntryPrerenderFilePath: await fsp.realpath(
       path.resolve(
-        "node_modules/@react-router/dev/dist/config/defaults/entry.client.rsc.tsx"
+        "node_modules/@react-router/dev/dist/config/defaults/entry.server.node.rsc.tsx"
       )
     ),
     entryPrerenderFilePath: await fsp.realpath(
+      path.resolve("app/entry.prerender.tsx")
+    ),
+    defaultEntryServerFilePath: await fsp.realpath(
       path.resolve(
-        "node_modules/@react-router/dev/dist/config/defaults/entry.server.node.rsc.tsx"
+        "node_modules/@react-router/dev/dist/config/defaults/entry.react-server.node.tsx"
       )
     ),
     entryServerFilePath: await fsp.realpath(
@@ -144,21 +152,160 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
       return js`
         import "${virtualReactPreamble.id}";
         import manifest from "${virtualManifest.id}";
+        import ReactServerDOM from "react-server-dom-diy/client";
         window.__remixManifest = manifest;
+
+        window.__diy_client_manifest__ = {
+          _cache: new Map(),
+          resolveClientReference([id, exportName]) {
+            return {
+              preloadModule() {
+                if (window.__diy_client_manifest__._cache.has(id)) {
+                  return window.__diy_client_manifest__._cache.get(id);
+                }
+                const promise = import(id)
+                  .then((mod) => {
+                    promise.status = "fulfilled";
+                    promise.value = mod;
+                  })
+                  .catch((res) => {
+                    promise.status = "rejected";
+                    promise.reason = res;
+                    throw res;
+                  });
+                promise.status = "pending";
+                window.__diy_client_manifest__._cache.set(id, promise);
+                return promise;
+              },
+              requireModule() {
+                const cached = window.__diy_client_manifest__._cache.get(id);
+                if (!cached) throw new Error("Module " + id + " not found");
+                if (cached.reason) throw cached.reason;
+                return cached.value[exportName];
+              },
+            };
+          },
+        };
+
+        if (import.meta.hot) {
+          import.meta.hot.on("react-router:hmr", () => {
+            window.__remixRouter.revalidate();
+          });
+        }
+
+        window.__diy_client_manifest__.callServer = async (id, args) => {
+          const href = window.location.href;
+          const headers = new Headers({
+            Accept: "text/x-component",
+            "rsc-action": id,
+          });
+          const responsePromise = fetch(href, {
+            method: "POST",
+            headers,
+            body: await ReactServerDOM.encodeReply(args),
+          });
+
+          const result = await ReactServerDOM.createFromFetch(
+            responsePromise,
+            window.__diy_client_manifest__
+          );
+
+          window.__remixRouter.revalidate();
+
+          return result;
+        };
+
+        window.createFromReadableStream = (body) => {
+          return ReactServerDOM.createFromReadableStream(
+            body,
+            window.__diy_client_manifest__
+          );
+        };
+
         import("${reactRouterViteContext.entryBrowserFilePath}");
       `;
     }
 
     return js`
-      import "${reactRouterViteContext.entryBrowserFilePath}";
+      import ReactServerDOM from "react-server-dom-diy/client";
+
+      window.__diy_client_manifest__ = {
+        _cache: new Map(),
+        resolveClientReference([id, exportName]) {
+          return {
+            preloadModule() {
+              if (window.__diy_client_manifest__._cache.has(id)) {
+                return window.__diy_client_manifest__._cache.get(id);
+              }
+              const promise = import("virtual:react-router/client-references")
+                .then(({ default: mods }) => mods[id]())
+                .then((mod) => {
+                  promise.status = "fulfilled";
+                  promise.value = mod;
+                })
+                .catch((res) => {
+                  promise.status = "rejected";
+                  promise.reason = res;
+                  throw res;
+                });
+              promise.status = "pending";
+              window.__diy_client_manifest__._cache.set(id, promise);
+              return promise;
+            },
+            requireModule() {
+              const cached = window.__diy_client_manifest__._cache.get(id);
+              if (!cached) throw new Error("Module " + id + " not found");
+              if (cached.reason) throw cached.reason;
+              return cached.value[exportName];
+            },
+          };
+        },
+      };
+
+      window.__diy_client_manifest__.callServer = async (id, args) => {
+        const href = window.location.href;
+        const headers = new Headers({
+          Accept: "text/x-component",
+          "rsc-action": id,
+        });
+        const responsePromise = fetch(href, {
+          method: "POST",
+          headers,
+          body: await ReactServerDOM.encodeReply(args),
+        });
+
+        const result = await ReactServerDOM.createFromFetch(
+          responsePromise,
+          window.__diy_client_manifest__
+        );
+
+        window.__remixRouter.revalidate();
+
+        return result;
+      };
+
+      window.createFromReadableStream = (body) => {
+        return ReactServerDOM.createFromReadableStream(
+          body,
+          window.__diy_client_manifest__
+        );
+      };
+
+      import("${reactRouterViteContext.entryBrowserFilePath}");
     `;
   }
 
-  function createVirtualPrerenderEntry() {
+  function createVirtualPrerenderEntry(mode?: "build" | "dev" | "scan") {
     const routes = reactRouterViteContext.routes;
     if (!routes) throw new Error("No routes found");
 
     return js`
+      import * as defaultEntryServer from ${JSON.stringify(
+        resolveFileUrl(
+          reactRouterViteContext,
+          reactRouterViteContext.defaultEntryPrerenderFilePath
+        )
+      )};
       import * as entryServer from ${JSON.stringify(
         resolveFileUrl(
           reactRouterViteContext,
@@ -193,7 +340,12 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
       export const publicPath = ${JSON.stringify(
         reactRouterViteContext.basename
       )};
-      export const entry = { module: entryServer };
+      export const entry = {
+        module: {
+          ...defaultEntryServer,
+          ...entryServer,
+        },
+      };
       export const routes = {
         ${Object.keys(routes)
           .map((key, index) => {
@@ -216,11 +368,17 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
     `;
   }
 
-  function createVirtualServerEntry() {
+  function createVirtualServerEntry(mode?: "build" | "dev" | "scan") {
     const routes = reactRouterViteContext.routes;
     if (!routes) throw new Error("No routes found");
 
     return js`
+      import * as defaultEntryServer from ${JSON.stringify(
+        resolveFileUrl(
+          reactRouterViteContext,
+          reactRouterViteContext.defaultEntryServerFilePath
+        )
+      )};
       import * as entryServer from ${JSON.stringify(
         resolveFileUrl(
           reactRouterViteContext,
@@ -246,7 +404,12 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
       export const basename = ${JSON.stringify(
         reactRouterViteContext.basename
       )};
-      export const entry = { module: entryServer };
+      export const entry = {
+        module: {
+          ...defaultEntryServer,
+          ...entryServer,
+        },
+      };
       export const routes = {
         ${Object.keys(routes)
           .map((key, index) => {
@@ -262,7 +425,11 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
       }`;
           })
           .join(",\n  ")}
-      };`;
+      };
+      export { default as serverReferences } from ${JSON.stringify(
+        virtualServerReferences.id
+      )}
+    `;
   }
 
   function createVirtualClientReferences() {
@@ -386,8 +553,26 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
     const entry = getReactRouterManifestBuildAssets(
       reactRouterViteContext,
       viteManifest,
+      virtualBrowserEntry.id
+    );
+    const entry2 = getReactRouterManifestBuildAssets(
+      reactRouterViteContext,
+      viteManifest,
       reactRouterViteContext.entryBrowserFilePath
     );
+    const clientReferences = getReactRouterManifestBuildAssets(
+      reactRouterViteContext,
+      viteManifest,
+      virtualClientReferences.id
+    );
+    entry.css = dedupe([...entry.css, ...entry2.css]);
+    entry.imports = dedupe([
+      ...entry.imports,
+      entry2.module,
+      ...entry2.imports,
+      clientReferences.module,
+      ...clientReferences.imports,
+    ]);
 
     const browserRoutes: ReactRouterManifest["routes"] = {};
     const serverRoutes: ReactRouterManifest["routes"] = {};
@@ -510,23 +695,32 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
     ...react(),
     {
       name: "react-router-rsc",
-      buildStart() {},
-      config(config, { command }) {
+      config() {
         return {
           builder: {
             async buildApp(builder) {
-              let lastServerModulesSize =
-                reactRouterViteContext.serverModules.size;
-              let lastClientModulesSize =
-                reactRouterViteContext.clientModules.size;
+              let lastServerModulesSize = 0;
+              let lastClientModulesSize = 0;
               let firstBuild = true;
               do {
-                console.log("BUILDING Clients...");
+                if (
+                  firstBuild ||
+                  lastServerModulesSize !==
+                    reactRouterViteContext.serverModules.size
+                ) {
+                  console.log("Building server...");
+                  lastServerModulesSize =
+                    reactRouterViteContext.serverModules.size;
+                  await builder.build(builder.environments.server);
+                }
                 if (
                   firstBuild ||
                   lastClientModulesSize !==
                     reactRouterViteContext.clientModules.size
                 ) {
+                  console.log("building browser...");
+                  lastClientModulesSize =
+                    reactRouterViteContext.clientModules.size;
                   const output = (await builder.build(
                     builder.environments.client
                   )) as Vite.Rollup.RollupOutput;
@@ -541,19 +735,8 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
                       manifestOutput as Vite.Rollup.OutputAsset
                     ).source.toString()
                   );
+                  console.log("building prerender...");
                   await builder.build(builder.environments.ssr);
-                  lastClientModulesSize =
-                    reactRouterViteContext.clientModules.size;
-                }
-
-                if (
-                  firstBuild ||
-                  lastServerModulesSize !==
-                    reactRouterViteContext.serverModules.size
-                ) {
-                  await builder.build(builder.environments.server);
-                  lastServerModulesSize =
-                    reactRouterViteContext.serverModules.size;
                 }
                 firstBuild = false;
               } while (
@@ -562,7 +745,6 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
                 lastServerModulesSize !==
                   reactRouterViteContext.serverModules.size
               );
-              console.log(reactRouterViteContext.clientModules);
             },
           },
           build: {
@@ -577,9 +759,8 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
                 outDir: "build/browser",
                 rollupOptions: {
                   input: [
-                    command === "build"
-                      ? reactRouterViteContext.entryBrowserFilePath
-                      : virtualBrowserEntry.id,
+                    virtualBrowserEntry.id,
+                    reactRouterViteContext.entryBrowserFilePath,
                     ...Object.values(reactRouterViteContext.routes).map(
                       (route) =>
                         path.join(
@@ -668,13 +849,13 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
           case virtualClientReferences.resolvedId:
             return createVirtualClientReferences();
           case virtualPrerenderEntry.resolvedId:
-            return createVirtualPrerenderEntry();
+            return createVirtualPrerenderEntry(this.environment?.mode);
           case virtualReactPreamble.resolvedId:
             return createReactPreamble();
           case virtualManifest.resolvedId:
             return createVirtualManifest(this.environment?.mode);
           case virtualServerEntry.resolvedId:
-            return createVirtualServerEntry();
+            return createVirtualServerEntry(this.environment?.mode);
           case virtualServerReferences.resolvedId:
             return createVirtualServerReferences();
         }

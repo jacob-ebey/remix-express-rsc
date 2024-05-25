@@ -12,7 +12,7 @@ const serverBuild = await import("./build/server/server-build.js");
 
 installGlobals({
   clientReferences: prerenderBuild.clientReferences,
-  serverReferences: {},
+  serverReferences: serverBuild.serverReferences,
 });
 
 const serverRequestHandler = createReactServerRequestHandler(serverBuild);

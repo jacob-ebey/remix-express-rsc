@@ -16,8 +16,8 @@
     }
   },
   "scripts": {
-    "build": "vite build --app",
     "dev": "NODE_OPTIONS='--conditions react-server' vite dev",
+    "build": "vite build --app",
     "start": "NODE_ENV=production node --conditions react-server ./server.js",
     "typecheck": "tsc"
   },
