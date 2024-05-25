@@ -479,6 +479,7 @@ export default async function reactRouter(): Promise<Vite.PluginOption[]> {
 
   // In dev, the server and browser manifests are the same
   async function getReactRouterManifestForDev() {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     const routes: Record<string, any> = {};
 
     if (!reactRouterViteContext.routes) throw new Error("No routes found");
@@ -934,7 +935,7 @@ export default async function reactRouter(): Promise<Vite.PluginOption[]> {
           }
 
           if (environment.name === "client") {
-            let route = getRoute(
+            const route = getRoute(
               reactRouterViteContext.appDirectory,
               reactRouterViteContext.routes,
               file
@@ -942,16 +943,16 @@ export default async function reactRouter(): Promise<Vite.PluginOption[]> {
 
             type ManifestRoute = RouteManifest[string];
             type HmrEventData = { route: ManifestRoute | null };
-            let hmrEventData: HmrEventData = { route: null };
+            const hmrEventData: HmrEventData = { route: null };
 
             if (route) {
               // invalidate manifest on route exports change
-              let serverManifest = (
+              const serverManifest = (
                 await server.ssrLoadModule(virtualManifest.id)
               ).default as ReactRouterManifest;
 
-              let oldRouteMetadata = serverManifest.routes[route.id];
-              let newRouteMetadata = (await getReactRouterManifestForDev())
+              const oldRouteMetadata = serverManifest.routes[route.id];
+              const newRouteMetadata = (await getReactRouterManifestForDev())
                 .routes[route.id];
 
               hmrEventData.route = newRouteMetadata;
@@ -1206,8 +1207,8 @@ function getRoute(
   routes: RouteManifest,
   file: string
 ): ConfigRoute | undefined {
-  let routePath = normalizePath(path.relative(appDirectory, file));
-  let route = Object.values(routes).find(
+  const routePath = normalizePath(path.relative(appDirectory, file));
+  const route = Object.values(routes).find(
     (r) => normalizePath(r.file) === routePath
   );
   return route;
