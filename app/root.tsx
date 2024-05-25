@@ -10,7 +10,7 @@ import {
 import { DelegateAnchors } from "./components/event-delegation";
 import "./root.css";
 
-// WIP: There has to be at least one loader in the app, so here's one.
+// WIP: There has to be at least one loader in the app because WIP, so here's one.
 export function loader() {
   return null;
 }
