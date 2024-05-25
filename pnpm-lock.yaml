@@ -10,12 +10,6 @@ overrides:
   vite: 6.0.0-alpha.15
 
 patchedDependencies:
-  '@react-router/dev@0.0.0-experimental-e16afd9b7':
-    hash: xzj6pzcmh7ey6e6dvilmtsrtce
-    path: patches/@react-router__dev@0.0.0-experimental-e16afd9b7.patch
-  react-router@0.0.0-experimental-e16afd9b7:
-    hash: 4j6ruje4emxqtunqy6zhezje2i
-    path: patches/react-router@0.0.0-experimental-e16afd9b7.patch
   react@0.0.0-experimental-96c584661-20240412:
     hash: jq26usongtd4z44j5b3sx5q44m
     path: patches/react@0.0.0-experimental-96c584661-20240412.patch
@@ -34,11 +28,11 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(@types/react@18.2.20)(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
       '@react-router/express':
-        specifier: 0.0.0-experimental-e16afd9b7
-        version: 0.0.0-experimental-e16afd9b7(express@4.19.2)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
+        specifier: 0.0.0-experimental-9aebdc522
+        version: 0.0.0-experimental-9aebdc522(express@4.19.2)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
       '@react-router/node':
-        specifier: 0.0.0-experimental-e16afd9b7
-        version: 0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
+        specifier: 0.0.0-experimental-9aebdc522
+        version: 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -67,8 +61,8 @@ importers:
         specifier: 0.0.0-experimental-96c584661-20240412
         version: 0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
       react-router:
-        specifier: 0.0.0-experimental-e16afd9b7
-        version: 0.0.0-experimental-e16afd9b7(patch_hash=4j6ruje4emxqtunqy6zhezje2i)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
+        specifier: 0.0.0-experimental-9aebdc522
+        version: 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
       react-server-dom-diy:
         specifier: 0.0.0-experimental-15a3a5622-202404158
         version: 0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
@@ -95,8 +89,8 @@ importers:
         specifier: 7.24.5
         version: 7.24.5
       '@react-router/dev':
-        specifier: 0.0.0-experimental-e16afd9b7
-        version: 0.0.0-experimental-e16afd9b7(patch_hash=xzj6pzcmh7ey6e6dvilmtsrtce)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-e16afd9b7(patch_hash=4j6ruje4emxqtunqy6zhezje2i)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))
+        specifier: 0.0.0-experimental-9aebdc522
+        version: 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))
       '@tailwindcss/typography':
         specifier: 0.5.13
         version: 0.5.13(tailwindcss@3.4.3)
@@ -906,13 +900,13 @@ packages:
       '@types/react':
         optional: true
 
-  '@react-router/dev@0.0.0-experimental-e16afd9b7':
-    resolution: {integrity: sha512-1H3TuN9EjAXxQRxmIAiTiagezTdaz6o8QQhNqeue568zaDOTdPY0IHhz7AbOd7OlWcKiO4H/C/XhDZuV2PVDXQ==}
+  '@react-router/dev@0.0.0-experimental-9aebdc522':
+    resolution: {integrity: sha512-nkJPQrz8HzyTI6kxci7HByYKW7kX74xSGwg/DbthGnvPIQWCpntgsrlidoZLbkXN/plL6kfk7T0CR30MqALXXA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
-      '@react-router/serve': ^0.0.0-experimental-e16afd9b7
-      react-router: ^0.0.0-experimental-e16afd9b7
+      '@react-router/serve': ^0.0.0-experimental-9aebdc522
+      react-router: ^0.0.0-experimental-9aebdc522
       react-server-dom-diy: '*'
       typescript: ^5.1.0
       vite: 6.0.0-alpha.15
@@ -929,8 +923,8 @@ packages:
       wrangler:
         optional: true
 
-  '@react-router/express@0.0.0-experimental-e16afd9b7':
-    resolution: {integrity: sha512-8Gkay5BKiFu7JvLlL8SU0URVS1Zcda1NabLUif6iOcloBIpfFIg7CygT5wnzMwA1rk+jnOSbjsNqqv5F2maOwQ==}
+  '@react-router/express@0.0.0-experimental-9aebdc522':
+    resolution: {integrity: sha512-1HWp19IIeVkxflQjBm3wf/WDaSUSF1HUpQkl3LS/QWlSuOAQ+nWKzcQohE3bpj7M0kgbe6+53M3uS7bGysdAWA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       express: ^4.17.1
@@ -939,8 +933,8 @@ packages:
       typescript:
         optional: true
 
-  '@react-router/node@0.0.0-experimental-e16afd9b7':
-    resolution: {integrity: sha512-ACtHiRDiIygqorMOr+VDDw2bb4O1ofPvCmlDBfnXknKyjYEMgLu4JphQSD2l6iWVbMiIZYgogyQGG2RE+b7Msg==}
+  '@react-router/node@0.0.0-experimental-9aebdc522':
+    resolution: {integrity: sha512-Cs5MXBk0ctqPP5wZBajuxt+s0/qD0hyejW4S9jkFdP2YND73Rvq9MD3+HqHwhO3qo7yq7x54gsaIkD3EG7dLvA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.1.0
@@ -948,8 +942,8 @@ packages:
       typescript:
         optional: true
 
-  '@react-router/server-runtime@0.0.0-experimental-e16afd9b7':
-    resolution: {integrity: sha512-7FaVAhfovTv5NClc2E1MDZcxS8mcnI9QYaKbWF7xX952eCp07R+0K+opPngJW1MF6aTwDMpWb5eodUbZHpxCTg==}
+  '@react-router/server-runtime@0.0.0-experimental-9aebdc522':
+    resolution: {integrity: sha512-pPd4Q6SUgbiVxQJaDm0ViHh6QUdPGi//c48JPTXN1dJr0Ozxdz//PpKQfDp7ZBV50+lRDBQHTNwK54SSvvqKjg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.1.0
@@ -1949,8 +1943,8 @@ packages:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
 
-  react-router@0.0.0-experimental-e16afd9b7:
-    resolution: {integrity: sha512-QcHenbRufzOYwF5AAeITpfXJAcTEjzgty2AqFqPTd2+9gOvP50sg3XOLnLhyFMf8a4Ll+f2VPQDtoc8vES3XSA==}
+  react-router@0.0.0-experimental-9aebdc522:
+    resolution: {integrity: sha512-P/sJ4nMcOmEtf9hAingSRqr3e/FCVLG/yTsL2xllq2S7Vg4LnzKQ2YzDmYK4rkjxEX/UXkl11hbBd7QaOZRT7w==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: 0.0.0-experimental-96c584661-20240412
@@ -2931,7 +2925,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.2.20
 
-  '@react-router/dev@0.0.0-experimental-e16afd9b7(patch_hash=xzj6pzcmh7ey6e6dvilmtsrtce)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-e16afd9b7(patch_hash=4j6ruje4emxqtunqy6zhezje2i)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))':
+  '@react-router/dev@0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-router@0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react-server-dom-diy@0.0.0-experimental-15a3a5622-202404158(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(rollup@4.17.2)(typescript@5.1.6)(vite@6.0.0-alpha.15(@types/node@20.12.12))':
     dependencies:
       '@babel/core': 7.24.5
       '@babel/generator': 7.24.5
@@ -2942,8 +2936,8 @@ snapshots:
       '@babel/traverse': 7.24.5
       '@babel/types': 7.24.5
       '@npmcli/package-json': 4.0.1
-      '@react-router/node': 0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
-      '@react-router/server-runtime': 0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
+      '@react-router/node': 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
+      '@react-router/server-runtime': 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
       arg: 5.0.2
       chalk: 4.1.2
       es-module-lexer: 1.5.3
@@ -2957,7 +2951,7 @@ snapshots:
       picomatch: 2.3.1
       prettier: 2.8.8
       react-refresh: 0.14.2
-      react-router: 0.0.0-experimental-e16afd9b7(patch_hash=4j6ruje4emxqtunqy6zhezje2i)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
+      react-router: 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
       semver: 7.6.2
       set-cookie-parser: 2.6.0
       unplugin-rsc: 0.0.9(rollup@4.17.2)
@@ -2972,9 +2966,9 @@ snapshots:
       - rollup
       - supports-color
 
-  '@react-router/express@0.0.0-experimental-e16afd9b7(express@4.19.2)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)':
+  '@react-router/express@0.0.0-experimental-9aebdc522(express@4.19.2)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)':
     dependencies:
-      '@react-router/node': 0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
+      '@react-router/node': 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
       express: 4.19.2
     optionalDependencies:
       typescript: 5.1.6
@@ -2982,9 +2976,9 @@ snapshots:
       - react
       - react-dom
 
-  '@react-router/node@0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)':
+  '@react-router/node@0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)':
     dependencies:
-      '@react-router/server-runtime': 0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
+      '@react-router/server-runtime': 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)
       '@web3-storage/multipart-parser': 1.0.0
       cookie-signature: 1.2.1
       source-map-support: 0.5.21
@@ -2996,12 +2990,12 @@ snapshots:
       - react
       - react-dom
 
-  '@react-router/server-runtime@0.0.0-experimental-e16afd9b7(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)':
+  '@react-router/server-runtime@0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))(typescript@5.1.6)':
     dependencies:
       '@types/cookie': 0.6.0
       '@web3-storage/multipart-parser': 1.0.0
       cookie: 0.6.0
-      react-router: 0.0.0-experimental-e16afd9b7(patch_hash=4j6ruje4emxqtunqy6zhezje2i)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
+      react-router: 0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m))
       source-map: 0.7.4
       turbo-stream: 2.0.1
     optionalDependencies:
@@ -4009,7 +4003,7 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-router@0.0.0-experimental-e16afd9b7(patch_hash=4j6ruje4emxqtunqy6zhezje2i)(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)):
+  react-router@0.0.0-experimental-9aebdc522(react-dom@0.0.0-experimental-96c584661-20240412(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)))(react@0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)):
     dependencies:
       react: 0.0.0-experimental-96c584661-20240412(patch_hash=jq26usongtd4z44j5b3sx5q44m)
       turbo-stream: 2.0.1

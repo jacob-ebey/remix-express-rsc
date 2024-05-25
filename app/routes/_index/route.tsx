@@ -7,16 +7,16 @@ import { useActionData, useLoaderData } from "react-router";
 
 import { LoginForm, LogoutForm } from "./form";
 
+const cookie = createCookie("user", {
+  httpOnly: true,
+  path: "/",
+  sameSite: "lax",
+});
+
 export async function action({ request, response }: ActionFunctionArgs) {
   const formData = await request.formData();
 
   if (formData.get("intent") === "logout") {
-    const cookie = createCookie("user", {
-      httpOnly: true,
-      path: "/",
-      sameSite: "lax",
-      maxAge: 0,
-    });
     throw redirect("/", {
       headers: {
         "Set-Cookie": await cookie.serialize(""),
@@ -38,11 +38,6 @@ export async function action({ request, response }: ActionFunctionArgs) {
   ) {
     error = "Enter a valid email and password.";
   } else {
-    const cookie = createCookie("user", {
-      httpOnly: true,
-      path: "/",
-      sameSite: "lax",
-    });
     throw redirect("/", {
       headers: {
         "Set-Cookie": await cookie.serialize(email),
@@ -57,12 +52,6 @@ export async function action({ request, response }: ActionFunctionArgs) {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const cookie = createCookie("user", {
-    httpOnly: true,
-    path: "/",
-    sameSite: "lax",
-  });
-
   const email = await cookie.parse(request.headers.get("Cookie"));
 
   if (email) {
