@@ -163,7 +163,7 @@ async function reactRouter(): Promise<Vite.PluginOption[]> {
                 if (window.__diy_client_manifest__._cache.has(id)) {
                   return window.__diy_client_manifest__._cache.get(id);
                 }
-                const promise = import(id)
+                const promise = import(/* @vite-ignore */ id)
                   .then((mod) => {
                     promise.status = "fulfilled";
                     promise.value = mod;

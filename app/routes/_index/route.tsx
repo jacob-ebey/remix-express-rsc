@@ -79,7 +79,6 @@ export default function Index() {
     <>
       <title>Home</title>
       <meta name="description" content="Welcome to React Router!" />
-      test
       {actionData || loaderData}
     </>
   );
